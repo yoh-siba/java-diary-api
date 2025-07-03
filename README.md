@@ -250,34 +250,128 @@ http://localhost:8080/api/h2-console
 
 ## 🔧 設定
 
-### 環境別設定
+### 環境変数設定
 
-#### 開発環境（デフォルト）
-- データベース: H2 インメモリDB
-- ログレベル: DEBUG
-- H2コンソール: 有効
+このアプリケーションは`.env`ファイルによる環境変数設定をサポートしています。
 
-#### 本番環境
+#### 1. .envファイルの作成
+
 ```bash
-# 本番プロファイルで起動
-./mvnw spring-boot:run -Dspring-boot.run.arguments=--spring.profiles.active=prod
+# .env.exampleをコピーして.envファイルを作成
+cp .env.example .env
 
-# または環境変数で設定
-export SPRING_PROFILES_ACTIVE=prod
+# .envファイルを編集
+nano .env  # または好みのエディタ
+```
+
+#### 2. 利用可能な環境変数
+
+```bash
+# データベース設定
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=diary_db
+DB_USERNAME=diary_user
+DB_PASSWORD=diary_password
+
+# JWT設定
+JWT_SECRET=your-secret-key-here
+JWT_EXPIRATION=86400000
+
+# サーバー設定
+SERVER_PORT=8080
+SERVER_CONTEXT_PATH=/api
+
+# ログ設定
+LOG_LEVEL_ROOT=INFO
+LOG_LEVEL_APP=DEBUG
+
+# CORS設定
+CORS_ALLOWED_ORIGINS=http://localhost:3000,http://localhost:8081
+CORS_ALLOWED_METHODS=GET,POST,PUT,DELETE,OPTIONS
+CORS_ALLOWED_HEADERS=*
+CORS_ALLOW_CREDENTIALS=true
+
+# Spring プロファイル
+SPRING_PROFILES_ACTIVE=dev
+```
+
+#### 3. 環境変数を使用した起動
+
+**方法1: .envファイルを使用（推奨）**
+```bash
+# .envファイルが自動で読み込まれます
 ./mvnw spring-boot:run
 ```
 
-### ポート変更
+**方法2: スクリプトを使用**
 ```bash
-./mvnw spring-boot:run -Dspring-boot.run.arguments=--server.port=8081
+# Linux/Mac
+source scripts/load-env.sh
+./mvnw spring-boot:run
+
+# Windows
+scripts\load-env.bat
+mvnw.cmd spring-boot:run
 ```
 
-### JWT設定
-
-環境変数で設定可能：
+**方法3: 直接環境変数を設定**
 ```bash
+# Linux/Mac
 export JWT_SECRET=your-secret-key
-export JWT_EXPIRATION=86400000
+export SERVER_PORT=8081
+./mvnw spring-boot:run
+
+# Windows
+set JWT_SECRET=your-secret-key
+set SERVER_PORT=8081
+mvnw.cmd spring-boot:run
+```
+
+### 環境別設定
+
+#### 開発環境（デフォルト）
+```bash
+# .envファイルで設定
+SPRING_PROFILES_ACTIVE=dev
+H2_CONSOLE_ENABLED=true
+LOG_LEVEL_APP=DEBUG
+```
+
+#### 本番環境
+```bash
+# .envファイルで設定
+SPRING_PROFILES_ACTIVE=prod
+DB_HOST=your-postgres-host
+DB_NAME=diary_production
+DB_USERNAME=diary_prod_user
+DB_PASSWORD=your-secure-password
+JWT_SECRET=your-very-secure-secret-key
+LOG_LEVEL_ROOT=WARN
+LOG_LEVEL_APP=INFO
+```
+
+#### テスト環境
+```bash
+# .envファイルで設定
+SPRING_PROFILES_ACTIVE=test
+H2_DATABASE_URL=jdbc:h2:mem:testdb_test
+JWT_SECRET=test-secret-key
+```
+
+### セキュリティ重要事項
+
+⚠️ **重要**: 本番環境では必ず以下を変更してください：
+
+1. **JWT Secret**: 十分に長く複雑なシークレットキーを設定
+2. **データベースパスワード**: 強力なパスワードを使用
+3. **CORS設定**: 必要最小限のオリジンのみ許可
+
+```bash
+# 本番環境での推奨設定例
+JWT_SECRET=$(openssl rand -base64 64)  # ランダムなシークレット生成
+DB_PASSWORD=$(openssl rand -base64 32)  # ランダムなパスワード生成
+CORS_ALLOWED_ORIGINS=https://yourdomain.com
 ```
 
 ## 🧪 テスト

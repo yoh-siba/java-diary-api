@@ -28,6 +28,7 @@ com/diary/api/security/UserPrincipal.class
 com/diary/api/entity/DiaryEntry$Weather.class
 com/diary/api/service/UserService.class
 com/diary/api/entity/DiaryEntry$Mood.class
+com/diary/api/config/AppConfig.class
 com/diary/api/entity/DiaryTag.class
 com/diary/api/service/StatisticsService.class
 com/diary/api/dto/UserUpdateDto.class

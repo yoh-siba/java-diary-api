@@ -1,4 +1,5 @@
 /mnt/c/Users/Yoh/Documents/develop/勉強/Java/java-diary-api/src/main/java/com/diary/api/DiaryApiApplication.java
+/mnt/c/Users/Yoh/Documents/develop/勉強/Java/java-diary-api/src/main/java/com/diary/api/config/AppConfig.java
 /mnt/c/Users/Yoh/Documents/develop/勉強/Java/java-diary-api/src/main/java/com/diary/api/config/SecurityConfig.java
 /mnt/c/Users/Yoh/Documents/develop/勉強/Java/java-diary-api/src/main/java/com/diary/api/controller/AuthController.java
 /mnt/c/Users/Yoh/Documents/develop/勉強/Java/java-diary-api/src/main/java/com/diary/api/controller/DiaryController.java
