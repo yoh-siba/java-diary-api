@@ -6,7 +6,8 @@
       "Bash(./mvnw clean compile)",
       "Bash(curl:*)",
       "Bash(chmod:*)",
-      "Bash(./mvnw:*)"
+      "Bash(./mvnw:*)",
+      "Bash(ss:*)"
     ],
     "deny": []
   }
